@@ -5,38 +5,42 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Lancamentos {
-    private int identificador;
-    private String descrição;
-    private BigDecimal valor;
-    private LocalDate data;
-    private TipoLancamento tipoLancamento;
-    private Categoria categoria;
+    int identificador;
+    String descrição;
+    BigDecimal valor;
+    LocalDate data;
+    TipoLancamento tipoLancamento;
+    Categoria categoria;
+    Scanner sc = new Scanner(System.in);
 
     public Lancamentos(int identificador, String descrição, BigDecimal valor, LocalDate data) {
         this.identificador = identificador;
         this.descrição = descrição;
         this.valor = valor;
         this.data = data;
-        this.categoria = qcate();
         this.tipoLancamento = qtipo();
+        this.categoria = qcate();
+    }
+
+    public int getIdentificador() {
+        return identificador;
     }
 
     public TipoLancamento qtipo() {
-        Scanner sc = new Scanner(System.in);
         boolean RD = true;
         TipoLancamento tipo = null;
         do {
             System.out.println("Qual tipo de lançamento você deseja");
             System.out.println("[1] Receita / [2] Despesa");
-            String opcao = sc.next();
+            int opcao = sc.nextInt();
             switch (opcao) {
-                case "1":
-                    System.out.println("Seu tipo de lançamento é Receita!!");
+                case 1:
+                    System.out.println("Seu tipo de lançamento é Receita!!\n");
                     tipo = TipoLancamento.RECEITA;
                     RD = false;
                     break;
-                case "2":
-                    System.out.println("Seu tipo de lançamento é Despesa!!");
+                case 2:
+                    System.out.println("Seu tipo de lançamento é Despesa!!\n");
                     tipo = TipoLancamento.DESPESA;
                     RD = false;
                     break;
@@ -45,35 +49,68 @@ public class Lancamentos {
                     break;
             }
         } while (RD == true);
-        sc.close();
         return tipo;
     }
 
     public Categoria qcate() {
-        Scanner sc = new Scanner(System.in);
         boolean CT = true;
         Categoria cate = null;
         do {
             System.out.println("Qual Categoria é seu lançamento? ");
-            System.out.println("[1] Receita / [2] Despesa");
-            String opcao = sc.next();
-            switch (opcao) {
-                case "1":
-                    System.out.println("Seu tipo de lançamento é Receita!!");
-                    cate = Categoria.;
-                    CT = false;
-                    break;
-                case "2":
-                    System.out.println("Seu tipo de lançamento é Despesa!!");
-                    cate = TipoLancamento.;
-                    CT = false;
-                    break;
-                default:
-                    System.out.println("Digite um número correspondente!!");
-                    break;
+            for (Categoria c : Categoria.values()) {
+                System.out.println("[" + c.ordinal() + "] " + c);
+            }
+            if (sc.hasNextInt()) {
+                int opcao = sc.nextInt();
+                switch (opcao) {
+                    case 0:
+                        System.out.println("Sua Categoria é Alimentação!!");
+                        cate = Categoria.ALIMENTACAO;
+                        CT = false;
+                        break;
+                    case 1:
+                        System.out.println("Sua Categoria é Transporte!!");
+                        cate = Categoria.TRANSPORTE;
+                        CT = false;
+                        break;
+                    case 2:
+                        System.out.println("Sua Categoria é Moradia!!");
+                        cate = Categoria.MORADIA;
+                        CT = false;
+                        break;
+                    case 3:
+                        System.out.println("Sua Categoria é Saúde!!");
+                        cate = Categoria.SAUDE;
+                        CT = false;
+                        break;
+                    case 4:
+                        System.out.println("Sua Categoria é Educação!!");
+                        cate = Categoria.EDUCACAO;
+                        CT = false;
+                        break;
+                    case 5:
+                        System.out.println("Sua Categoria é Lazer!!");
+                        cate = Categoria.LAZER;
+                        CT = false;
+                        break;
+                    case 6:
+                        System.out.println("Sua Categoria é Salário!!");
+                        cate = Categoria.SALARIO;
+                        CT = false;
+                        break;
+                    case 7:
+                        System.out.println("Sua Categoria é Outra!!");
+                        cate = Categoria.OUTROS;
+                        CT = false;
+                        break;
+                    default:
+                        System.out.println("Digite um número correspondente!!");
+                        break;
+                }
+            } else {
+                System.out.println("Não há mais linhas");
             }
         } while (CT == true);
-        sc.close();
         return cate;
     }
 }

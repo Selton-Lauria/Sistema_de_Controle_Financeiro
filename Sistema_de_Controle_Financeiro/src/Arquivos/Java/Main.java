@@ -1,10 +1,13 @@
 package Arquivos.Java;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
     static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean menu = true;
+        ControleFinanceiro cf = new ControleFinanceiro();
         do {
             System.out.println("\n----------MENU----------");
             System.out.println("O que você deseja fazer? ");
@@ -17,25 +20,42 @@ public class Main {
             System.out.println("7 - Consultar por período");
             System.out.println("8 - Exibir resumo financeiro");
             System.out.println("0 - Sair");
-            String opcao = sc.next().trim();
+            String opcao = sc.nextLine().trim();
             switch (opcao) {
                 case "1":
-                    System.out.println("primeiro escolhido");
+                    System.out.println("Cadastro de Lançamentos...");
+                    cf.cadastrarLancamento();
                     break;
                 case "2":
-                    System.out.println("Segundo escolhido");
+                    System.out.println("Listando lançamentos...");
+                    cf.listarLancamentos();
                     break;
                 case "3":
-                    System.out.println("Terceiro escolhido");
+                    System.out.println("Digite o ID do lançamento que deseja consultar: ");
+                    int verId = sc.nextInt();
+                    sc.nextLine();
+                    cf.consultarPorId(verId);
                     break;
                 case "4":
-                    System.out.println("Quarto escolhido");
+                    System.out.println("Digite o identificador que deseja alterar: ");
+                    int alterar = sc.nextInt();
+                    sc.nextLine();
+                    cf.alterarLance(alterar);
                     break;
                 case "5":
-                    System.out.println("Quinto escolhido");
+                    System.out.println("Digite o Identificador do lançamento que deseja excluir: ");
+                    int excluir = sc.nextInt();
+                    sc.nextLine();
+                    cf.excluirLance(excluir);
                     break;
                 case "6":
-                    System.out.println("sexto escolhido");
+                    System.out.println("Por qual tipo você deseja filtrar? [1] Receita / [2] Despesa");
+                    String tipo = sc.nextLine().trim();
+                    if (tipo != "1" && tipo != "2" ) {
+                        System.out.println("Digite um número correspondente!");
+                    } else {
+                        cf.filtrarPorTipo(tipo);
+                    }
                     break;
                 case "7":
                     System.out.println("Sétimo escolhido");
@@ -52,5 +72,6 @@ public class Main {
                     break;
             }
         } while (menu == true);
+        sc.close();
     }
 }
