@@ -50,18 +50,21 @@ public class Main {
                     break;
                 case "6":
                     System.out.println("Por qual tipo você deseja filtrar? [1] Receita / [2] Despesa");
-                    String tipo = sc.nextLine().trim();
-                    if (tipo != "1" && tipo != "2" ) {
+                    int tipo = sc.nextInt();
+                    sc.nextLine();
+                    if (tipo != 1 && tipo != 2 ) {
                         System.out.println("Digite um número correspondente!");
                     } else {
                         cf.filtrarPorTipo(tipo);
                     }
                     break;
                 case "7":
-                    System.out.println("Sétimo escolhido");
+                    System.out.println("Por qual período gostaria de consultar? ");
+                    cf.consultarPorPeríodo();
                     break;
                 case "8":
-                    System.out.println("Oitavo escolhido");
+                    System.out.println("Resumo financeiro: ");
+                    cf.consultarSaldo();
                     break;
                 case "0":
                     System.out.println("Fim do programa...");

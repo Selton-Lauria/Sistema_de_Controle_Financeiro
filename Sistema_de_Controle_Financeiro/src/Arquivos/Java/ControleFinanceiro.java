@@ -1,5 +1,6 @@
 package Arquivos.Java;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 public class ControleFinanceiro {
     private List<Lancamentos> lancamento = new ArrayList<>();
     private int excluidos;
+    private BigDecimal saldo;
     DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     Scanner sc = new Scanner(System.in);
     Scanner sc2 = new Scanner(System.in);
@@ -23,10 +25,10 @@ public class ControleFinanceiro {
         } else {
             System.out.println("Qual o valor do seu lançamento? ");
             BigDecimal valor = sc.nextBigDecimal();
+            sc.nextLine();
             if (valor.intValue() <= 0) {
                 System.out.println("O valor não pode ser igual ou menor a zero...");
             } else {
-                sc.nextLine();
                 LocalDate data = verificarData();
                 int id = indentificarId();
                 Lancamentos lance = new Lancamentos(id, desc, valor, data);
@@ -56,11 +58,12 @@ public class ControleFinanceiro {
                 System.out.println("Data: " + numero.data);
                 System.out.println("Tipo do lançamento: " + numero.tipoLancamento);
                 System.out.println("Categoria do lançamento: " + numero.categoria);
+                cont = 0;
             } else {
                 cont += 1;
             }
         }
-        if (cont > lancamento.size()) {
+        if (cont >= lancamento.size()) {
             System.out.println("Não existe um lançamento com esse identificador...");
         }
     }
@@ -69,14 +72,32 @@ public class ControleFinanceiro {
         int cont = 0;
         for (Lancamentos numero : this.lancamento) {
             if (alterar == numero.identificador) {
-                int index = this.lancamento.indexOf(numero);
-                System.out.println("Lançamento alterado!!!");
-                break;
+                cont = 0;
+                System.out.println("Digite a nova descrição: ");
+                String desc = sc.nextLine();
+                if (desc.isBlank()) {
+                    System.out.println("A descrição não pode ser vazia...");
+                } else {
+                    System.out.println("Digite o novo valor: ");
+                    BigDecimal valor = sc.nextBigDecimal();
+                    sc.nextLine();
+                    if (valor.intValue() <= 0 ) {
+                        System.out.println("Valor inválido! Não pode ser menor ou igual a zero");
+                    }
+                    numero.setDescrição(desc);
+                    numero.setValor(valor);
+                    System.out.println("Digite a nova data: ");
+                    numero.setData(verificarData());
+                    numero.qtipo();
+                    numero.qcate();
+                    System.out.println("Lançamento alterado!!!");
+                    break;
+                }
             } else {
                 cont += 1;
             }
         }
-        if (cont > lancamento.size()) {
+        if (cont >= lancamento.size()) {
             System.out.println("Não existe um lançamento com esse identificador...");
         }
     }
@@ -95,19 +116,81 @@ public class ControleFinanceiro {
                 cont += 1;
             }
         }
-        if (cont > lancamento.size()) {
+        if (cont >= lancamento.size()) {
             System.out.println("Não existe um lançamento com esse identificador...");
         }
     }
 
-    public void filtrarPorTipo(String tipo) {
-        if (tipo == "1") {
+    public void filtrarPorTipo(int tipo) {
+        if (tipo == 1) {
+            System.out.println("\nOs lançamentos que são Receitas: ");
             for (Lancamentos numero : this.lancamento) {
-                if (numero.tipoLancamento)
-                System.out.println("Os lançamentos que são Receita: ");
+                if (numero.tipoLancamento == TipoLancamento.RECEITA) {
+                    System.out.println("\nIdentificador: " + numero.identificador);
+                    System.out.println("Descrição: " + numero.descrição);
+                    System.out.println("Valor: R$" + numero.valor);
 
+                    // System.out.println(numero.identificador + " " + numero.descrição);
+                }
+            }
+        } else if (tipo == 2) {
+            System.out.println("\nOs lançamentos que são Despesas: ");
+            for (Lancamentos numero : this.lancamento) {
+                if (numero.tipoLancamento == TipoLancamento.DESPESA) {
+                    System.out.println("\nIdentificador: " + numero.identificador);
+                    System.out.println("Descrição: " + numero.descrição);
+                    System.out.println("Valor: R$" + numero.valor);
+
+                    // System.out.println(numero.identificador + " " + numero.descrição);
+                }
             }
         }
+    }
+
+    public void consultarPorPeríodo() {
+        System.out.println("Digite a data Mínima");
+        LocalDate dataMin = verificarData();
+        System.out.println("Digite a data Máxima");
+        LocalDate dataMax = verificarData();
+        int cont = 0;
+        if (dataMax.isBefore(dataMin)) {
+            System.out.println("Data inválida! A data máxima antecede a data mínima!");
+        } else {
+            for (Lancamentos numero : this.lancamento) {
+                if (numero.data.isAfter(dataMin) && numero.data.isBefore(dataMax)) {
+                    System.out.println("Identificador: " + numero.identificador);
+                    System.out.println("Descrição: " + numero.descrição);
+                    System.out.println("Valor: R$" + numero.valor);
+                    System.out.println("Data: " + numero.data);
+                    cont = 0;
+                } else {
+                    cont += 1;
+                }
+            }
+            if (cont >= this.lancamento.size()) {
+                System.out.println("Não existe nenhuma data dentro desse período...");
+            }
+        }
+    }
+
+    public void consultarSaldo() {
+        calcularSaldo();
+        System.out.println("O saldo atual é: " + this.saldo);
+    }
+
+    public void calcularSaldo() {
+        BigDecimal receita = BigDecimal.ZERO;
+        BigDecimal despesa = BigDecimal.ZERO;
+        for (Lancamentos numero : this.lancamento) {
+            if (numero.tipoLancamento == TipoLancamento.RECEITA) {
+                receita = receita.add(numero.valor);
+            } else {
+                despesa = despesa.add(numero.valor);
+            }
+        }
+        System.out.println("O total da receita é: " + receita);
+        System.out.println("O total de despesa é: " + despesa);
+        saldo = receita.subtract(despesa);
     }
 
     public LocalDate verificarData() {

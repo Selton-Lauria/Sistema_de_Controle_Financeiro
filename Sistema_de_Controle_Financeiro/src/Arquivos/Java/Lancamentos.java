@@ -22,10 +22,6 @@ public class Lancamentos {
         this.categoria = qcate();
     }
 
-    public int getIdentificador() {
-        return identificador;
-    }
-
     public TipoLancamento qtipo() {
         boolean RD = true;
         TipoLancamento tipo = null;
@@ -112,5 +108,25 @@ public class Lancamentos {
             }
         } while (CT == true);
         return cate;
+    }
+
+    public void setDescrição(String descrição) {
+        this.descrição = descrição;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public void setTipoLancamento(TipoLancamento tipoLancamento) {
+        this.tipoLancamento = tipoLancamento;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
