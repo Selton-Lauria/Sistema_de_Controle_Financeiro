@@ -1,6 +1,4 @@
 package Arquivos.Java;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
@@ -60,7 +58,7 @@ public class Main {
                     break;
                 case "7":
                     System.out.println("Por qual período gostaria de consultar? ");
-                    cf.consultarPorPeríodo();
+                    cf.consultarPorPeriodo();
                     break;
                 case "8":
                     System.out.println("Resumo financeiro: ");
@@ -74,7 +72,7 @@ public class Main {
                     System.out.println("Escreva um número correspondente por favor!!");
                     break;
             }
-        } while (menu == true);
+        } while (menu);
         sc.close();
     }
 }

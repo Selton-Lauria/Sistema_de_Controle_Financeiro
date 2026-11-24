@@ -56,55 +56,51 @@ public class Lancamentos {
             for (Categoria c : Categoria.values()) {
                 System.out.println("[" + c.ordinal() + "] " + c);
             }
-            if (sc.hasNextInt()) {
-                int opcao = sc.nextInt();
-                switch (opcao) {
-                    case 0:
-                        System.out.println("Sua Categoria é Alimentação!!");
-                        cate = Categoria.ALIMENTACAO;
-                        CT = false;
-                        break;
-                    case 1:
-                        System.out.println("Sua Categoria é Transporte!!");
-                        cate = Categoria.TRANSPORTE;
-                        CT = false;
-                        break;
-                    case 2:
-                        System.out.println("Sua Categoria é Moradia!!");
-                        cate = Categoria.MORADIA;
-                        CT = false;
-                        break;
-                    case 3:
-                        System.out.println("Sua Categoria é Saúde!!");
-                        cate = Categoria.SAUDE;
-                        CT = false;
-                        break;
-                    case 4:
-                        System.out.println("Sua Categoria é Educação!!");
-                        cate = Categoria.EDUCACAO;
-                        CT = false;
-                        break;
-                    case 5:
-                        System.out.println("Sua Categoria é Lazer!!");
-                        cate = Categoria.LAZER;
-                        CT = false;
-                        break;
-                    case 6:
-                        System.out.println("Sua Categoria é Salário!!");
-                        cate = Categoria.SALARIO;
-                        CT = false;
-                        break;
-                    case 7:
-                        System.out.println("Sua Categoria é Outra!!");
-                        cate = Categoria.OUTROS;
-                        CT = false;
-                        break;
-                    default:
-                        System.out.println("Digite um número correspondente!!");
-                        break;
-                }
-            } else {
-                System.out.println("Não há mais linhas");
+            int opcao = sc.nextInt();
+            switch (opcao) {
+                case 0:
+                    System.out.println("Sua Categoria é Alimentação!!");
+                    cate = Categoria.ALIMENTACAO;
+                    CT = false;
+                    break;
+                case 1:
+                    System.out.println("Sua Categoria é Transporte!!");
+                    cate = Categoria.TRANSPORTE;
+                    CT = false;
+                    break;
+                case 2:
+                    System.out.println("Sua Categoria é Moradia!!");
+                    cate = Categoria.MORADIA;
+                    CT = false;
+                    break;
+                case 3:
+                    System.out.println("Sua Categoria é Saúde!!");
+                    cate = Categoria.SAUDE;
+                    CT = false;
+                    break;
+                case 4:
+                    System.out.println("Sua Categoria é Educação!!");
+                    cate = Categoria.EDUCACAO;
+                    CT = false;
+                    break;
+                case 5:
+                    System.out.println("Sua Categoria é Lazer!!");
+                    cate = Categoria.LAZER;
+                    CT = false;
+                    break;
+                case 6:
+                    System.out.println("Sua Categoria é Salário!!");
+                    cate = Categoria.SALARIO;
+                    CT = false;
+                    break;
+                case 7:
+                    System.out.println("Sua Categoria é Outra!!");
+                    cate = Categoria.OUTROS;
+                    CT = false;
+                    break;
+                default:
+                    System.out.println("Digite um número correspondente!!");
+                    break;
             }
         } while (CT == true);
         return cate;
@@ -120,13 +116,5 @@ public class Lancamentos {
 
     public void setData(LocalDate data) {
         this.data = data;
-    }
-
-    public void setTipoLancamento(TipoLancamento tipoLancamento) {
-        this.tipoLancamento = tipoLancamento;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
     }
 }
